@@ -21,7 +21,7 @@ class SaleController extends Controller
         ]);
 
         $query = Sale::with('user')
-            ->latest('sold_at');
+            ->orderBy('id', 'asc');
 
         if ($request->filled('search')) {
             $search = $request->search;

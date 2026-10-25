@@ -22,7 +22,7 @@ class PurchaseController extends Controller
         ]);
 
         $query = Purchase::with(['supplier', 'user'])
-            ->latest('purchased_at');
+            ->orderBy('id', 'asc');
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -64,6 +64,16 @@ class PurchaseController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->has('items') && is_array($request->items)) {
+            $items = $request->items;
+            foreach ($items as $k => $item) {
+                if (isset($item['unit_price']) && !isset($item['unit_cost'])) {
+                    $items[$k]['unit_cost'] = $item['unit_price'];
+                }
+            }
+            $request->merge(['items' => $items]);
+        }
+
         $validated = $request->validate([
             'supplier_id' => [
                 'required',
@@ -93,6 +103,16 @@ class PurchaseController extends Controller
                 'numeric',
                 'min:0',
             ],
+        ], [
+            'supplier_id.required' => 'Supplier pemasok wajib dipilih.',
+            'items.required' => 'Minimal harus ada 1 baris barang yang dibeli.',
+            'items.min' => 'Minimal harus ada 1 baris barang yang dibeli.',
+            'items.*.product_id.required' => 'Produk pada baris pembelian wajib dipilih.',
+            'items.*.product_id.distinct' => 'Tidak boleh ada produk kembar di dalam satu transaksi pembelian.',
+            'items.*.quantity.required' => 'Jumlah kuantitas barang wajib diisi.',
+            'items.*.quantity.min' => 'Jumlah kuantitas barang minimal 1.',
+            'items.*.unit_cost.required' => 'Harga beli satuan wajib diisi.',
+            'items.*.unit_cost.min' => 'Harga beli satuan tidak boleh bernilai negatif.',
         ]);
 
         DB::transaction(function () use ($validated) {

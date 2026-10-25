@@ -117,7 +117,7 @@
             </td>
             <td>
                 <input type="number"
-                       name="items[${itemIndex}][unit_price]"
+                       name="items[${itemIndex}][unit_cost]"
                        id="price-${itemIndex}"
                        class="form-control"
                        style="text-align: right;"
