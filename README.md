@@ -295,7 +295,29 @@ erDiagram
 
 ---
 
-## 7. Pengujian Otomatis (Automated Test Suite)
+## 7. Tangkapan Layar Antarmuka Aplikasi (Screenshots)
+
+Berikut adalah pratinjau tampilan sistem yang telah diperbarui dan siap digunakan:
+
+| Katalog Produk Toko Offline | Dashboard Admin & Ringkasan |
+| :---: | :---: |
+| ![Katalog Produk](screenshots/01-katalog.png) | ![Dashboard Admin](screenshots/02-dashboard.png) |
+
+| Master Produk & Inventaris | Form Transaksi Penjualan (Cash) |
+| :---: | :---: |
+| ![Master Data Produk](screenshots/03-produk.png) | ![Transaksi Penjualan](screenshots/04-transaksi-penjualan.png) |
+
+| Riwayat Data Penjualan | Format Cetak Struk Kasir Resmi |
+| :---: | :---: |
+| ![Data Penjualan](screenshots/05-data-penjualan.png) | ![Cetak Struk Resmi](screenshots/06-cetak-struk.png) |
+
+| Laporan Valuasi & Ringkasan Stok | Mutasi & Log Audit Pergerakan Stok |
+| :---: | :---: |
+| ![Laporan Stok](screenshots/07-laporan-stok.png) | ![Mutasi Stok](screenshots/08-mutasi-stok.png) |
+
+---
+
+## 8. Pengujian Otomatis (Automated Test Suite)
 
 Aplikasi telah lulus seluruh pengujian otomatis dengan total **31 skenario pengujian dan 162 assertions (100% PASS)**:
 
@@ -352,7 +374,7 @@ Duration: 3.12s
 
 ---
 
-## 8. Panduan Troubleshooting Singkat
+## 9. Panduan Troubleshooting Singkat
 
 | Permasalahan | Solusi |
 |---|---|
