@@ -1,37 +1,83 @@
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Produk</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f4f6f9; padding: 30px; }
-        .container { max-width: 700px; margin: auto; background: white; padding: 25px; border-radius: 10px; }
-        table { width: 100%; border-collapse: collapse; }
-        td { padding: 12px; border-bottom: 1px solid #e2e8f0; }
-        td:first-child { font-weight: bold; width: 35%; }
-        .btn { display: inline-block; margin-top: 20px; padding: 10px 15px; background: #2563eb; color: white; border-radius: 5px; text-decoration: none; }
-    </style>
-</head>
-<body>
-<div class="container">
-    <h1>Detail Produk</h1>
+@section('title', 'Detail Produk: ' . $product->name)
 
-    <table>
-        <tr><td>SKU</td><td>{{ $product->sku }}</td></tr>
-        <tr><td>Nama Produk</td><td>{{ $product->name }}</td></tr>
-        <tr><td>Kategori</td><td>{{ $product->category->name }}</td></tr>
-        <tr><td>Deskripsi</td><td>{{ $product->description ?: '-' }}</td></tr>
-        <tr><td>Harga</td><td>Rp {{ number_format((float) $product->price, 0, ',', '.') }}</td></tr>
-        <tr><td>Stok</td><td>{{ $product->stock }}</td></tr>
-        <tr><td>Stok Minimum</td><td>{{ $product->minimum_stock }}</td></tr>
-        <tr><td>Dibuat</td><td>{{ $product->created_at->format('d-m-Y H:i') }}</td></tr>
-        <tr><td>Diperbarui</td><td>{{ $product->updated_at->format('d-m-Y H:i') }}</td></tr>
-    </table>
+@section('content')
 
-    <a href="{{ route('products.index') }}" class="btn">Kembali ke Daftar Produk</a>
-    <a href="{{ route('products.edit', $product) }}" class="btn">Edit Produk</a>
+<div class="page-header">
+    <div>
+        <h1 class="page-header-title">Detail Produk</h1>
+        <p class="page-header-subtitle">Rincian spesifikasi, harga beli/jual, dan status persediaan di gudang toko.</p>
+    </div>
+    <div class="page-header-actions">
+        <a href="{{ route('products.index') }}" class="btn btn-outline btn-sm">&larr; Kembali ke Daftar Produk</a>
+        @if (auth()->user()?->role === 'admin')
+            <a href="{{ route('products.edit', $product) }}" class="btn btn-warning btn-sm">Edit Produk</a>
+        @endif
+        <a href="{{ route('catalog.show', $product) }}" class="btn btn-primary btn-sm" target="_blank">Lihat di Katalog</a>
+    </div>
 </div>
-</body>
-</html>
+
+<div class="card" style="max-width: 860px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: 240px 1fr; gap: 28px; align-items: start;">
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 24px; display: flex; align-items: center; justify-content: center; min-height: 220px;">
+            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+        </div>
+
+        <div>
+            <div style="font-size: 12px; font-weight: 700; color: #0f766e; text-transform: uppercase; margin-bottom: 4px;">
+                {{ $product->category->name ?? 'Tanpa Kategori' }}
+            </div>
+            <h2 style="font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 12px;">{{ $product->name }}</h2>
+
+            <div class="table-responsive">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td style="width: 35%; color: #64748b; font-weight: 600;">Nomor SKU</td>
+                            <td><code>{{ $product->sku }}</code></td>
+                        </tr>
+                        <tr>
+                            <td style="color: #64748b; font-weight: 600;">Deskripsi</td>
+                            <td>{{ $product->description ?: '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #64748b; font-weight: 600;">Harga Beli / Pokok</td>
+                            <td style="font-weight: 600;">Rp {{ number_format((float) $product->purchase_price, 0, ',', '.') }}</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #64748b; font-weight: 600;">Harga Jual Kasir</td>
+                            <td style="font-weight: 700; color: #0f766e; font-size: 16px;">
+                                Rp {{ number_format((float) $product->selling_price, 0, ',', '.') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="color: #64748b; font-weight: 600;">Stok Fisik Gudang</td>
+                            <td>
+                                @if($product->stock <= $product->minimum_stock)
+                                    <span class="badge badge-danger">{{ $product->stock }} (Di Bawah Batas Minimum)</span>
+                                @else
+                                    <span class="badge badge-success">{{ $product->stock }} (Tersedia)</span>
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="color: #64748b; font-weight: 600;">Batas Minimum Stok</td>
+                            <td>{{ $product->minimum_stock }} unit</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #64748b; font-weight: 600;">Waktu Ditambahkan</td>
+                            <td>{{ $product->created_at->format('d/m/Y H:i') }} WIB</td>
+                        </tr>
+                        <tr>
+                            <td style="color: #64748b; font-weight: 600;">Terakhir Diperbarui</td>
+                            <td>{{ $product->updated_at->format('d/m/Y H:i') }} WIB</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection

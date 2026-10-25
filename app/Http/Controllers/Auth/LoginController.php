@@ -11,6 +11,10 @@ class LoginController extends Controller
 {
     public function showLogin()
     {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
         return response()
             ->view('auth.login')
             ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
@@ -19,19 +23,34 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'username' => ['required', 'string'],
             'password' => ['required', 'string'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $loginInput = $request->input('username');
+        $password = $request->input('password');
+
+        // Dukung login via email atau username
+        $fieldType = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        $credentials = [
+            $fieldType => $loginInput,
+            'password' => $password,
+        ];
+
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
+
+            if (Auth::user()?->role === 'customer') {
+                return redirect()->route('customer.shop');
+            }
 
             return redirect()->intended(route('dashboard'));
         }
 
         throw ValidationException::withMessages([
-            'username' => 'Username atau password salah.',
+            'username' => 'Username/email atau password yang dimasukkan salah.',
         ]);
     }
 

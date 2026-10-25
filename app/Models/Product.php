@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
@@ -13,7 +14,9 @@ class Product extends Model
         'sku',
         'name',
         'description',
-        'price',
+        'purchase_price',
+        'selling_price',
+        'image',
         'stock',
         'minimum_stock',
     ];
@@ -21,7 +24,8 @@ class Product extends Model
     protected function casts(): array
     {
         return [
-            'price' => 'decimal:2',
+            'purchase_price' => 'decimal:2',
+            'selling_price' => 'decimal:2',
             'stock' => 'integer',
             'minimum_stock' => 'integer',
         ];
@@ -37,9 +41,28 @@ class Product extends Model
         return $this->hasMany(StockMovement::class);
     }
 
-    public function suppliers()
+    public function suppliers(): BelongsToMany
     {
         return $this->belongsToMany(Supplier::class, 'product_suppliers')
             ->withTimestamps();
+    }
+
+    public function purchaseItems(): HasMany
+    {
+        return $this->hasMany(PurchaseItem::class);
+    }
+
+    public function saleItems(): HasMany
+    {
+        return $this->hasMany(SaleItem::class);
+    }
+
+    public function getImageUrlAttribute(): string
+    {
+        if ($this->image && file_exists(public_path('images/products/' . $this->image))) {
+            return asset('images/products/' . $this->image);
+        }
+
+        return asset('images/products/default-product.svg');
     }
 }

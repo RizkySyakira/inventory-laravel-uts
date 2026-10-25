@@ -44,7 +44,8 @@ class ProductController extends Controller
         $allowedSorts = [
             'name',
             'sku',
-            'price',
+            'purchase_price',
+            'selling_price',
             'stock',
             'created_at',
         ];
@@ -117,7 +118,12 @@ class ProductController extends Controller
                 'nullable',
                 'string',
             ],
-            'price' => [
+            'purchase_price' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
+            'selling_price' => [
                 'required',
                 'numeric',
                 'min:0',
@@ -132,7 +138,20 @@ class ProductController extends Controller
                 'integer',
                 'min:0',
             ],
+            'image' => [
+                'nullable',
+                'image',
+                'mimes:jpeg,png,jpg,webp,svg',
+                'max:2048',
+            ],
         ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
+            $file->move(public_path('images/products'), $filename);
+            $validated['image'] = $filename;
+        }
 
         Product::create($validated);
 
@@ -196,7 +215,12 @@ class ProductController extends Controller
                 'nullable',
                 'string',
             ],
-            'price' => [
+            'purchase_price' => [
+                'required',
+                'numeric',
+                'min:0',
+            ],
+            'selling_price' => [
                 'required',
                 'numeric',
                 'min:0',
@@ -206,7 +230,20 @@ class ProductController extends Controller
                 'integer',
                 'min:0',
             ],
+            'image' => [
+                'nullable',
+                'image',
+                'mimes:jpeg,png,jpg,webp,svg',
+                'max:2048',
+            ],
         ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
+            $file->move(public_path('images/products'), $filename);
+            $validated['image'] = $filename;
+        }
 
         $product->update($validated);
 
@@ -223,12 +260,16 @@ class ProductController extends Controller
     {
         $this->ensureAdmin();
 
-        if ($product->stockMovements()->exists()) {
+        if (
+            $product->stockMovements()->exists() ||
+            $product->purchaseItems()->exists() ||
+            $product->saleItems()->exists()
+        ) {
             return redirect()
                 ->route('products.index')
                 ->with(
                     'error',
-                    'Produk tidak dapat dihapus karena memiliki riwayat transaksi stok.'
+                    'Produk tidak dapat dihapus karena sudah digunakan dalam transaksi.'
                 );
         }
 

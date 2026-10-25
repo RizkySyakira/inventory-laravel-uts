@@ -1,106 +1,139 @@
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Produk</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
-            padding: 30px;
-        }
+@section('title', 'Tambah Produk Baru')
 
-        .container {
-            max-width: 650px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-        }
+@section('content')
 
-        label { display: block; margin-top: 15px; }
+<div class="page-header">
+    <div>
+        <h1 class="page-header-title">Tambah Produk Baru</h1>
+        <p class="page-header-subtitle">Masukkan rincian spesifikasi produk, harga beli/jual, stok awal, dan gambar produk.</p>
+    </div>
+    <div class="page-header-actions">
+        <a href="{{ route('products.index') }}" class="btn btn-outline btn-sm">&larr; Kembali ke Daftar Produk</a>
+    </div>
+</div>
 
-        input, select, textarea {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 10px;
-            margin-top: 6px;
-            border: 1px solid #cbd5e1;
-            border-radius: 5px;
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 15px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .error { color: #dc2626; font-size: 14px; }
-    </style>
-</head>
-<body>
-<div class="container">
-    <h1>Tambah Produk</h1>
-
-    @if ($errors->any())
-        <div class="error">
-            <strong>Periksa kembali input kamu:</strong>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form action="{{ route('products.store') }}" method="POST">
+<div class="card" style="max-width: 800px; margin: 0 auto;">
+    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <label for="category_id">Kategori</label>
-        <select id="category_id" name="category_id" required>
-            <option value="">Pilih kategori</option>
-            @foreach ($categories as $category)
-                <option value="{{ $category->id }}"
-                    {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                    {{ $category->name }}
-                </option>
-            @endforeach
-        </select>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+                <label for="sku" class="form-label">Nomor SKU (Kode Unik) *</label>
+                <input type="text"
+                       name="sku"
+                       id="sku"
+                       class="form-control"
+                       value="{{ old('sku') }}"
+                       placeholder="Contoh: MOUSE-W-01"
+                       maxlength="50"
+                       required>
+            </div>
 
-        <label for="sku">SKU</label>
-        <input id="sku" name="sku" value="{{ old('sku') }}"
-               maxlength="50" required>
+            <div class="form-group">
+                <label for="category_id" class="form-label">Kategori Produk *</label>
+                <select name="category_id" id="category_id" class="form-control" required>
+                    <option value="">-- Pilih Kategori --</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
-        <label for="name">Nama Produk</label>
-        <input id="name" name="name" value="{{ old('name') }}"
-               maxlength="150" required>
+        <div class="form-group">
+            <label for="name" class="form-label">Nama Lengkap Produk *</label>
+            <input type="text"
+                   name="name"
+                   id="name"
+                   class="form-control"
+                   value="{{ old('name') }}"
+                   placeholder="Contoh: Logitech Wireless Mouse M185"
+                   maxlength="150"
+                   required>
+        </div>
 
-        <label for="description">Deskripsi</label>
-        <textarea id="description" name="description" rows="3">{{ old('description') }}</textarea>
+        <div class="form-group">
+            <label for="description" class="form-label">Deskripsi & Spesifikasi Produk</label>
+            <textarea name="description"
+                      id="description"
+                      class="form-control"
+                      rows="3"
+                      placeholder="Jelaskan spesifikasi, kegunaan, dan keunggulan barang...">{{ old('description') }}</textarea>
+        </div>
 
-        <label for="price">Harga</label>
-        <input id="price" type="number" name="price" min="0"
-               step="0.01" value="{{ old('price', '0') }}" required>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+                <label for="purchase_price" class="form-label">Harga Beli / Pokok (Rp) *</label>
+                <input type="number"
+                       name="purchase_price"
+                       id="purchase_price"
+                       class="form-control"
+                       min="0"
+                       step="1"
+                       value="{{ old('purchase_price', '0') }}"
+                       required>
+            </div>
 
-        <label for="stock">Stok Awal</label>
-        <input id="stock" type="number" name="stock" min="0"
-               step="1" value="{{ old('stock', '0') }}" required>
+            <div class="form-group">
+                <label for="selling_price" class="form-label">Harga Jual Kasir (Rp) *</label>
+                <input type="number"
+                       name="selling_price"
+                       id="selling_price"
+                       class="form-control"
+                       min="0"
+                       step="1"
+                       value="{{ old('selling_price', '0') }}"
+                       required>
+            </div>
+        </div>
 
-        <label for="minimum_stock">Stok Minimum</label>
-        <input id="minimum_stock" type="number" name="minimum_stock" min="0"
-               step="1" value="{{ old('minimum_stock', '0') }}" required>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+                <label for="stock" class="form-label">Stok Awal Fisik *</label>
+                <input type="number"
+                       name="stock"
+                       id="stock"
+                       class="form-control"
+                       min="0"
+                       step="1"
+                       value="{{ old('stock', '0') }}"
+                       required>
+            </div>
 
-        <button type="submit" class="btn">Simpan Produk</button>
-        <a href="{{ route('products.index') }}" class="btn">Kembali</a>
+            <div class="form-group">
+                <label for="minimum_stock" class="form-label">Batas Minimum Stok *</label>
+                <input type="number"
+                       name="minimum_stock"
+                       id="minimum_stock"
+                       class="form-control"
+                       min="0"
+                       step="1"
+                       value="{{ old('minimum_stock', '5') }}"
+                       required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="image" class="form-label">Foto / Gambar Produk</label>
+            <input type="file"
+                   name="image"
+                   id="image"
+                   class="form-control"
+                   accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml">
+            <div class="form-text">Format: JPG, PNG, WEBP, atau SVG. Ukuran maks: 2 MB. Jika tidak diunggah, akan memakai ilustrasi standar.</div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
+            <a href="{{ route('products.index') }}" class="btn btn-outline">Batal</a>
+            <button type="submit" class="btn btn-primary">
+                Simpan Produk Baru
+            </button>
+        </div>
     </form>
 </div>
-</body>
-</html>
+
+@endsection

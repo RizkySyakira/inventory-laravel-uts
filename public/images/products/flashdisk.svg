@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgFd" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff1f2"/>
+      <stop offset="100%" stop-color="#fee2e2"/>
+    </linearGradient>
+    <linearGradient id="fdMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="50%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+    <linearGradient id="fdRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bgFd)"/>
+  <g transform="translate(110, 100)">
+    <!-- USB Connector -->
+    <rect x="0" y="25" width="45" height="50" rx="3" fill="url(#fdMetal)" stroke="#64748b" stroke-width="2"/>
+    <!-- Connector cutouts -->
+    <rect x="12" y="37" width="8" height="12" rx="1" fill="#475569"/>
+    <rect x="26" y="37" width="8" height="12" rx="1" fill="#475569"/>
+    <!-- Flashdisk Body -->
+    <rect x="42" y="10" width="130" height="80" rx="10" fill="url(#fdRed)" stroke="#991b1b" stroke-width="2"/>
+    <!-- Lanyard loop -->
+    <path d="M172 30 Q 190 50 172 70" fill="none" stroke="#dc2626" stroke-width="8" stroke-linecap="round"/>
+    <path d="M172 36 Q 184 50 172 64" fill="none" stroke="#991b1b" stroke-width="2"/>
+    <!-- Texture & Branding -->
+    <text x="105" y="47" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">SanDisk</text>
+    <text x="105" y="66" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#fecaca" text-anchor="middle">Ultra 32 GB</text>
+  </g>
+  <text x="200" y="245" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" fill="#991b1b" text-anchor="middle">USB FLASHDISK SANDISK 32GB</text>
+</svg>
