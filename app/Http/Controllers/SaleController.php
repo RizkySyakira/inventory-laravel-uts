@@ -118,7 +118,7 @@ class SaleController extends Controller
                         'items' => 'Quantity penjualan harus lebih dari 0.',
                     ]);
                 }
-
+#memeriksa stok produk
                 if ($product->stock < $quantity) {
                     throw ValidationException::withMessages([
                         'items' =>

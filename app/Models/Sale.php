@@ -31,7 +31,7 @@ class Sale extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+#relasi sale ke sale item
     public function items(): HasMany
     {
         return $this->hasMany(SaleItem::class);
