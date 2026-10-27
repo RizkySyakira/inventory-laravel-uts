@@ -154,7 +154,7 @@ class RolePermissionMatrixTest extends TestCase
 
         // Customer dapat melihat katalog produk dan rincian produk
         $this->get('/catalog')->assertStatus(200)->assertSee('Barang Uji Coba');
-        $this->get("/catalog/{$this->product->id}")->assertStatus(200)->assertSee('Petunjuk Pembelian di Toko');
+        $this->get("/catalog/{$this->product->id}")->assertStatus(200)->assertSee('TEST-001');
 
         // Route receipt-lookup dialihkan ke katalog
         $this->get('/receipt-lookup')->assertRedirect(route('catalog.index'));

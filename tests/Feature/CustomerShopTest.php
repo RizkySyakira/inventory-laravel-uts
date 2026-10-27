@@ -57,16 +57,16 @@ class CustomerShopTest extends TestCase
         $detailResponse = $this->get("/catalog/{$this->product->id}");
         $detailResponse->assertStatus(200);
         $detailResponse->assertSee('Logitech Wireless Mouse M185');
-        $detailResponse->assertSee('Petunjuk Pembelian di Toko');
+        $detailResponse->assertSee('Nomor SKU');
     }
 
-    /** 2. Detail produk memuat panduan pembelian offline di kasir dan tanpa checkout online */
+    /** 2. Detail produk memuat spesifikasi dan ketersediaan stok */
     public function test_customer_sees_offline_purchase_guide(): void
     {
         $detailResponse = $this->get("/catalog/{$this->product->id}");
         $detailResponse->assertStatus(200);
         $detailResponse->assertSee('MOUSE-W-01');
-        $detailResponse->assertSee('Tunai, QRIS, Transfer BCA/Mandiri/BRI, atau Kartu Debit');
+        $detailResponse->assertSee('unit siap di toko');
     }
 
     /** 3. Customer dapat mencari produk berdasarkan nama atau filter kategori */

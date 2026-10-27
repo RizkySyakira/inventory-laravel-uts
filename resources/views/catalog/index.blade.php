@@ -244,7 +244,7 @@
         <div class="catalog-hero-content">
             <h1 class="catalog-hero-title">Katalog Produk</h1>
             <p class="catalog-hero-desc">
-                Temukan berbagai pilihan perlengkapan kantor, alat tulis, dan aksesoris komputer berkualitas dengan harga terbaik dan ketersediaan stok yang selalu terbarui.
+                Temukan kemudahan belanja berbagai kebutuhan harian anda disini.
             </p>
         </div>
         <img src="{{ asset('images/brand/store-banner.svg') }}" alt="Inventory Store Banner" class="hero-banner-img">

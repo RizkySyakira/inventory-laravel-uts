@@ -72,33 +72,6 @@
         font-weight: 600;
     }
 
-    .offline-instruction-box {
-        background: #f0fdfa;
-        border: 1px solid #99f6e4;
-        border-radius: 10px;
-        padding: 20px;
-        margin-top: 24px;
-    }
-
-    .instruction-title {
-        font-size: 15px;
-        font-weight: 700;
-        color: #0f766e;
-        margin-bottom: 10px;
-    }
-
-    .instruction-list {
-        margin: 0;
-        padding-left: 18px;
-        font-size: 13.5px;
-        color: #134e4a;
-        line-height: 1.6;
-    }
-
-    .instruction-list li {
-        margin-bottom: 6px;
-    }
-
     .related-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -162,17 +135,6 @@
             <p style="font-size: 14px; color: #475569; line-height: 1.6;">
                 {{ $product->description ?: 'Produk perlengkapan kantor dan bisnis dengan spesifikasi standar teruji, siap digunakan untuk mendukung produktivitas kerja harian.' }}
             </p>
-        </div>
-
-        {{-- Purchase Guide --}}
-        <div class="offline-instruction-box">
-            <div class="instruction-title">Petunjuk Pembelian di Toko</div>
-            <ol class="instruction-list">
-                <li>Kunjungi lokasi toko kami di <strong>Jl. Jenderal Sudirman No. 123, Jakarta Pusat</strong> (Buka Senin &ndash; Sabtu, 08.00 &ndash; 21.00 WIB).</li>
-                <li>Sebutkan nama barang atau kode SKU <strong>{{ $product->sku }}</strong> kepada staf kasir.</li>
-                <li>Pembayaran dapat dilakukan melalui <strong>Tunai, QRIS, Transfer BCA/Mandiri/BRI, atau Kartu Debit</strong>.</li>
-                <li>Struk resmi transaksi akan dicetak langsung oleh kasir setelah pembayaran selesai.</li>
-            </ol>
         </div>
     </div>
 
