@@ -15,7 +15,7 @@
 </div>
 
 <div class="card" style="max-width: 800px; margin: 0 auto;">
-    <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('products.store') }}" method="POST">
         @csrf
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
@@ -115,16 +115,6 @@
                        value="{{ old('minimum_stock', '5') }}"
                        required>
             </div>
-        </div>
-
-        <div class="form-group">
-            <label for="image" class="form-label">Foto / Gambar Produk</label>
-            <input type="file"
-                   name="image"
-                   id="image"
-                   class="form-control"
-                   accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml">
-            <div class="form-text">Format: JPG, PNG, WEBP, atau SVG. Ukuran maks: 2 MB. Jika tidak diunggah, akan memakai ilustrasi standar.</div>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0;">

@@ -15,7 +15,7 @@
 </div>
 
 <div class="card" style="max-width: 800px; margin: 0 auto;">
-    <form action="{{ route('products.update', $product) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('products.update', $product) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -111,23 +111,6 @@
                        value="{{ old('minimum_stock', $product->minimum_stock) }}"
                        required>
             </div>
-        </div>
-
-        <div class="form-group">
-            <label for="image" class="form-label">Ganti Foto / Gambar Produk</label>
-            <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 8px;">
-                <div style="width: 64px; height: 64px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 4px;">
-                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                </div>
-                <div style="flex: 1;">
-                    <input type="file"
-                           name="image"
-                           id="image"
-                           class="form-control"
-                           accept="image/jpeg,image/png,image/jpg,image/webp,image/svg+xml">
-                </div>
-            </div>
-            <div class="form-text">Biarkan kosong jika tidak ingin mengubah gambar produk yang sedang digunakan.</div>
         </div>
 
         <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #e2e8f0;">

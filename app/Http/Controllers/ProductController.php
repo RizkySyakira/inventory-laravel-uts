@@ -138,20 +138,7 @@ class ProductController extends Controller
                 'integer',
                 'min:0',
             ],
-            'image' => [
-                'nullable',
-                'image',
-                'mimes:jpeg,png,jpg,webp,svg',
-                'max:2048',
-            ],
         ]);
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
-            $file->move(public_path('images/products'), $filename);
-            $validated['image'] = $filename;
-        }
 
         Product::create($validated);
 
@@ -230,20 +217,7 @@ class ProductController extends Controller
                 'integer',
                 'min:0',
             ],
-            'image' => [
-                'nullable',
-                'image',
-                'mimes:jpeg,png,jpg,webp,svg',
-                'max:2048',
-            ],
         ]);
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = time() . '_' . preg_replace('/[^a-zA-Z0-9._-]/', '', $file->getClientOriginalName());
-            $file->move(public_path('images/products'), $filename);
-            $validated['image'] = $filename;
-        }
 
         $product->update($validated);
 

@@ -107,6 +107,7 @@
     .product-card {
         background: #ffffff;
         border: 1px solid #e2e8f0;
+        border-top: 3px solid #0f766e;
         border-radius: 10px;
         overflow: hidden;
         display: flex;
@@ -311,9 +312,6 @@
         <div class="products-grid">
             @foreach($products as $product)
                 <div class="product-card">
-                    <div class="product-img-wrapper">
-                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-img" loading="lazy">
-                    </div>
                     <div class="product-content">
                         <div class="product-meta">
                             <span class="product-category">{{ $product->category->name ?? 'Umum' }}</span>

@@ -16,7 +16,6 @@ class Product extends Model
         'description',
         'purchase_price',
         'selling_price',
-        'image',
         'stock',
         'minimum_stock',
     ];
@@ -55,14 +54,5 @@ class Product extends Model
     public function saleItems(): HasMany
     {
         return $this->hasMany(SaleItem::class);
-    }
-
-    public function getImageUrlAttribute(): string
-    {
-        if ($this->image && file_exists(public_path('images/products/' . $this->image))) {
-            return asset('images/products/' . $this->image);
-        }
-
-        return asset('images/products/default-product.svg');
     }
 }

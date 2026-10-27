@@ -83,8 +83,7 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 40px;">No</th>
-                    <th style="width: 60px;">Gambar</th>
+                    <th style="width: 50px;">No</th>
                     <th>SKU</th>
                     <th>Nama Produk</th>
                     <th>Kategori</th>
@@ -98,11 +97,6 @@
                 @forelse ($products as $product)
                     <tr>
                         <td>{{ $products->firstItem() + $loop->index }}</td>
-                        <td>
-                            <div style="width: 44px; height: 44px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 4px;">
-                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                            </div>
-                        </td>
                         <td>
                             <code style="font-weight: 600; color: #0f172a;">{{ $product->sku }}</code>
                         </td>
@@ -157,7 +151,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9" style="text-align: center; padding: 32px; color: var(--text-muted);">
+                        <td colspan="8" style="text-align: center; padding: 32px; color: var(--text-muted);">
                             Belum ada data produk dalam sistem persediaan.
                         </td>
                     </tr>
