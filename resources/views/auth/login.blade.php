@@ -128,22 +128,6 @@
             margin-bottom: 20px;
         }
 
-        .demo-accounts {
-            margin-top: 28px;
-            padding-top: 20px;
-            border-top: 1px dashed var(--border-color);
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .demo-pill {
-            background: #f1f5f9;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            color: #0f172a;
-        }
-
         .back-link {
             display: block;
             text-align: center;
@@ -213,15 +197,6 @@
         <a href="{{ route('catalog.index') }}" class="back-link">
             &larr; Kembali ke Katalog Produk
         </a>
-
-        <div class="demo-accounts">
-            <div style="font-weight: 700; margin-bottom: 6px; color: #334155;">Akun Pengujian Sistem:</div>
-            <div style="display: flex; flex-direction: column; gap: 4px;">
-                <div>Admin: <span class="demo-pill">admin</span> / <span class="demo-pill">admin123</span></div>
-                <div>Staff: <span class="demo-pill">staff</span> / <span class="demo-pill">staff123</span></div>
-                <div>Customer: <span class="demo-pill">customer</span> / <span class="demo-pill">customer123</span></div>
-            </div>
-        </div>
     </div>
 
 </body>
